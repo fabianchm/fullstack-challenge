@@ -28,6 +28,8 @@ services:
             MYSQL_DATABASE: finizens
             MYSQL_USER: user
             MYSQL_PASSWORD: secret
+        ports: 
+            - 3306:3306
         networks:
             - symfony
 
