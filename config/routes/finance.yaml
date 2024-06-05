@@ -1,0 +1,6 @@
+finance_controller:
+      resource: '../../app/Finance/Controller'
+      type: annotation
+      defaults: 
+          _format: 'json'
+      
