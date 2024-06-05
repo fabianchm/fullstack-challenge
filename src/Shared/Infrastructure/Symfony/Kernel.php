@@ -1,6 +1,6 @@
 <?php
 
-namespace Finizens;
+namespace Finizens\Shared\Infrastructure\Symfony;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
@@ -12,11 +12,11 @@ class Kernel extends BaseKernel
 
     protected function configureRoutes(RoutingConfigurator $routes): void
     {
-        $routes->import('../config/{routes}/' . $this->getEnvironment() . '/*.yaml');
-        $routes->import('../config/{routes}/*.yaml');
+        $routes->import('../../../../config/{routes}/' . $this->getEnvironment() . '/*.yaml');
+        $routes->import('../../../../config/{routes}/*.yaml');
 
         if (is_file(dirname(__DIR__, 4) . '/config/routes.yaml')) {
-            $routes->import('../config/routes.yaml');
+            $routes->import('../../../../config/routes.yaml');
         }
     }
 }
