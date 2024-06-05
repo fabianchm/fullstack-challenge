@@ -1,0 +1,8 @@
+<doctrine-mapping xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Finizens\Finance\Portfolio\Domain\Portfolio" table="finance_portfolio">
+        <id name="id" type="integer" column="id"/>
+    </entity>
+</doctrine-mapping>
