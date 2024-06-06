@@ -17,11 +17,10 @@ services:
     Finizens\:
          resource: '../src/'
          exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
+            - '../src/Shared/Infrastructure/Symfony/Kernel.php'
 
     App\:
          resource: '../app/'
+         tags: ['controller.service_arguments']
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

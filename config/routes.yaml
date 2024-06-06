@@ -1,5 +1,0 @@
-#controllers:
-#    resource:
-#        path: ../app/Finance/Portfolio/Controller/
-#        namespace: App\Finance\Portfolio\Controller
-#    type: attribute

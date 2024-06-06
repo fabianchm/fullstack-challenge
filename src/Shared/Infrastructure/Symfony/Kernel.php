@@ -10,6 +10,11 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
+    public function getProjectDir(): string
+    {
+        return __DIR__ . '/../../../..';
+    }
+
     protected function configureRoutes(RoutingConfigurator $routes): void
     {
         $routes->import('../../../../config/{routes}/' . $this->getEnvironment() . '/*.yaml');
