@@ -29,7 +29,14 @@ when@test:
         dbal:
             # "TEST_TOKEN" is typically set by ParaTest
             dbname_suffix: '_test%env(default::TEST_TOKEN)%'
-
+        orm:
+            mappings:
+                doctrine_repository_test_aggregate_root:
+                    mapping: true
+                    type: xml
+                    dir: "%kernel.project_dir%/tests/Shared/Integration/Persistence/Doctrine/"
+                    prefix: 'Tests\Shared\Integration\Persistence\Doctrine'
+                    is_bundle: false
 when@prod:
     doctrine:
         orm:

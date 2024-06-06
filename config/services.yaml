@@ -24,3 +24,7 @@ services:
          tags: ['controller.service_arguments']
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    
+    #This service is related to test only so it fit better in a service_test yml
+    Tests\Shared\Integration\Persistence\Doctrine\DoctrineRepositoryTestAggregateRootRepository:
+        public: true
