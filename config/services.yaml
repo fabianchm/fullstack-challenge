@@ -28,3 +28,12 @@ services:
     #This service is related to test only so it fit better in a service_test yml
     Tests\Shared\Integration\Persistence\Doctrine\DoctrineRepositoryTestAggregateRootRepository:
         public: true
+
+    _instanceof:
+        Finizens\Shared\Application\MessageHandler\CommandHandler:
+            tags:
+                - { name: messenger.message_handler, bus: command.bus }
+
+        Finizens\Shared\Application\MessageHandler\QueryHandler:
+            tags:
+                - { name: messenger.message_handler, bus: query.bus }

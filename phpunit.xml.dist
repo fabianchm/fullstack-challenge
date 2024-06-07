@@ -18,8 +18,11 @@
     </php>
 
     <testsuites>
-        <testsuite name="Test">
-            <directory suffix="Test.php">tests</directory>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">tests/Finance</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory suffix="Test.php">tests/Shared</directory>
         </testsuite>
     </testsuites>
 
