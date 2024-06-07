@@ -11,13 +11,15 @@ class Portfolio extends DataSourceRoot
 {
     public function __construct(
         private int $id,
+        private PortfolioAllocationCollection $allocations
     ) {
     }
 
     public static function create(
         int $id,
+        array $allocations
     ): self {
-        $portfolio = new self($id);
+        $portfolio = new self($id, new PortfolioAllocationCollection($id, $allocations));
 
         $portfolio->record(new PortfolioCreated($id));
 

@@ -32,7 +32,7 @@ final class CreatePortfolioHandlerTest extends MockeryTestCase
 
     public function test_creates_portfolio(): void
     {
-        $command = new CreatePortfolio(1); 
+        $command = new CreatePortfolio(1, []); 
         
         $this->repository->shouldReceive('save')->once();
         $this->bus

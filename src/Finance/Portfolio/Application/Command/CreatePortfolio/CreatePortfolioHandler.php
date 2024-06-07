@@ -13,7 +13,7 @@ class CreatePortfolioHandler implements CommandHandler
 {
     public function __construct(
         private PortfolioRepository $repository,
-        private MessageBusInterface $bus,
+        private MessageBusInterface $eventBus,
     ) {
     }
 
@@ -24,10 +24,10 @@ class CreatePortfolioHandler implements CommandHandler
         #       - remove all allocations from this portfolio 
         #       - call a service to remove related orders
         
-        $portfolio = Portfolio::create($command->id);
+        $portfolio = Portfolio::create($command->id, $command->allocations);
 
         $this->repository->save($portfolio);
 
-        $this->bus->dispatch(...$portfolio->pullDomainEvents());
+        $this->eventBus->dispatch(...$portfolio->pullDomainEvents());
     }
 }

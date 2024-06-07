@@ -22,7 +22,15 @@ final class CreatePortfolioController
     )]
     public function __invoke(int $id): JsonResponse 
     {
-        $this->bus->dispatch(new CreatePortfolio($id));
+        $this->bus->dispatch(
+            new CreatePortfolio(
+                $id,
+                [[
+                    'id' => 1,
+                    'shares' => 5
+                ]]
+            )
+        );
 
         return new JsonResponse();
     }
