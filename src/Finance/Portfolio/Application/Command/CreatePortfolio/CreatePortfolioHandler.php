@@ -19,15 +19,18 @@ class CreatePortfolioHandler implements CommandHandler
 
     public function __invoke(CreatePortfolio $command): void
     {
-        # TODO: 
-        #   if portfolio already exists:
-        #       - remove all allocations from this portfolio 
-        #       - call a service to remove related orders
-        
-        $portfolio = Portfolio::create($command->id, $command->allocations);
+        $portfolio = $this->repository->searchById($command->id);
+
+        if ($portfolio !== null) {
+            $portfolio->clearAllocations();
+            $portfolio->addAllocations($command->allocations);
+            # call a service to remove related orders
+        } else {
+            $portfolio = Portfolio::create($command->id, $command->allocations);
+        }
 
         $this->repository->save($portfolio);
-
+ 
         $this->eventBus->dispatch(...$portfolio->pullDomainEvents());
     }
 }

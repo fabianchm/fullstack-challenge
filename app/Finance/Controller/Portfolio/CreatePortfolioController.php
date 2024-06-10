@@ -6,6 +6,7 @@ namespace App\Finance\Controller\Portfolio;
 
 use Finizens\Finance\Portfolio\Application\Command\CreatePortfolio\CreatePortfolio;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,15 +21,12 @@ final class CreatePortfolioController
         name: 'portfolios.put',
         methods: ['PUT']
     )]
-    public function __invoke(int $id): JsonResponse 
+    public function __invoke(int $id, Request $request): JsonResponse 
     {
         $this->bus->dispatch(
             new CreatePortfolio(
                 $id,
-                [[
-                    'id' => 1,
-                    'shares' => 5
-                ]]
+                $request->toArray()['allocations']
             )
         );
 

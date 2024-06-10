@@ -29,4 +29,9 @@ class PortfolioAllocationCollection implements Entity
     {
         return $this->allocations->toArray();
     }
+
+    public function clear(): void
+    {
+        $this->allocations->clear();
+    }
 }
