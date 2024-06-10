@@ -19,5 +19,10 @@ final class PortfolioDoctrineRepository extends DoctrineRepository implements Po
     {
         $this->persistAggregateRoot($portfolio);
     }
+
+    public function searchById(int $id): ?Portfolio
+    {
+        return $this->repository()->findOneBy(['id' => $id]);
+    }
 }
 

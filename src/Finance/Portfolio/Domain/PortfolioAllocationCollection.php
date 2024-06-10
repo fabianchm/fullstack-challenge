@@ -24,4 +24,9 @@ class PortfolioAllocationCollection implements Entity
         $allocation = Allocation::create($allocationData['id'], $allocationData['shares']);
         $this->allocations->set($allocation->id(), $allocation);
     }
+
+    public function getArray(): array
+    {
+        return $this->allocations->toArray();
+    }
 }

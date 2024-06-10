@@ -25,4 +25,14 @@ class Portfolio extends DataSourceRoot
 
         return $portfolio;
     }
+
+    public function id(): int
+    {
+        return $this->id;
+    }
+
+    public function allocations(): array
+    {
+        return $this->allocations->getArray();
+    }
 }
