@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Finance\Application\Command;
+namespace Tests\Finance\Portfolio\Application\Command;
 
 use Finizens\Finance\Portfolio\Application\Command\CreatePortfolio\CreatePortfolio;
 use Finizens\Finance\Portfolio\Application\Command\CreatePortfolio\CreatePortfolioHandler;

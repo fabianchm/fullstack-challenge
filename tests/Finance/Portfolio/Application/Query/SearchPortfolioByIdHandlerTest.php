@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Finance\Application\Query;
+namespace Tests\Finance\Portfolio\Application\Query;
 
 use Finizens\Finance\Portfolio\Application\Query\SearchPortfolioById;
 use Finizens\Finance\Portfolio\Application\Query\SearchPortfolioByIdHandler;

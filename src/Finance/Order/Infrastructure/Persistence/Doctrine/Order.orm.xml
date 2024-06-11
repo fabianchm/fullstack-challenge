@@ -1,0 +1,13 @@
+<doctrine-mapping xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Finizens\Finance\Order\Domain\Order" table="finance_orders">
+        <id name="id" type="integer"/>
+        <field name="portfolio" type="integer"/>
+        <field name="allocation" type="integer"/>
+        <field name="shares" type="integer"/>
+        <field name="type" type="string"/>
+        <field name="completed" type="boolean"/>
+    </entity>
+</doctrine-mapping>

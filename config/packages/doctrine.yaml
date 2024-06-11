@@ -22,6 +22,12 @@ doctrine:
                 dir: "%kernel.project_dir%/src/Finance/Portfolio/Infrastructure/Persistence/Doctrine"
                 prefix: 'Finizens\Finance\Portfolio\Domain'
                 is_bundle: false
+            finance_order:
+                mapping: true
+                type: xml
+                dir: "%kernel.project_dir%/src/Finance/Order/Infrastructure/Persistence/Doctrine"
+                prefix: 'Finizens\Finance\Order\Domain'
+                is_bundle: false
 
 when@test:
         # namespace is arbitrary but should be different from App\Migrations
