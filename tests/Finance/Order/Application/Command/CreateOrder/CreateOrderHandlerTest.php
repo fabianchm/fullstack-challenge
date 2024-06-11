@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Finance\Order\Application\Command;
+namespace Tests\Finance\Order\Application\Command\CreateOrder;
 
 use Finizens\Finance\Order\Application\Command\CreateOrder\CreateOrder;
 use Finizens\Finance\Order\Application\Command\CreateOrder\CreateOrderHandler;

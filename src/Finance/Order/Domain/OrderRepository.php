@@ -9,4 +9,6 @@ use Finizens\Finance\Order\Domain\Order;
 interface OrderRepository
 {
     public function save(Order $order): void;
+
+    public function searchByPortfolioId(int $id): ?Order;
 }

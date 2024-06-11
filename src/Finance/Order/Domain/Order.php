@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Finizens\Finance\Order\Domain;
 
+use Finizens\Finance\Order\Domain\Event\OrderCompleted;
 use Finizens\Finance\Order\Domain\Event\OrderCreated;
 use Finizens\Shared\Domain\Aggregate\DataSourceRoot;
 
@@ -48,4 +49,18 @@ class Order extends DataSourceRoot
 
         return $order;
     }
+
+    public function completed(): bool
+    {
+        return $this->completed;
+    }
+
+    public function markAsCompleted(): void
+    {
+        $this->completed = true;
+
+        $this->record(
+            new OrderCompleted($this->id)
+        );
+    }   
 }
