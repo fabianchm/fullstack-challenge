@@ -20,8 +20,8 @@ final class OrderDoctrineRepository extends DoctrineRepository implements OrderR
         $this->persistAggregateRoot($order);
     }
 
-    public function searchByPortfolioId(int $id): ?Order
+    public function searchById(int $id): ?Order
     {
-        return $this->repository()->findOneBy(['portfolio' => $id]);
+        return $this->repository()->findOneBy(['id' => $id]);
     }
 }

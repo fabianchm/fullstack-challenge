@@ -10,6 +10,10 @@ class OrderCompleted implements DomainEvent
 {
     public function __construct(
         public int $id,
+        public int $portfolio,
+        public int $allocation,
+        public string $orderType,
+        public int $shares,
     ) {
     }
 }

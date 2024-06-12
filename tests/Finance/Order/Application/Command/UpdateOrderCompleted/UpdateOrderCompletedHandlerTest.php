@@ -47,7 +47,7 @@ final class UpdateOrderCompletedHandlerTest extends MockeryTestCase
             status: "completed"
         );
  
-        $this->repository->shouldReceive('searchByPortfolioId')
+        $this->repository->shouldReceive('searchById')
             ->with(1)
             ->andReturn($order);
         $this->repository->shouldNotReceive('save');
@@ -58,7 +58,6 @@ final class UpdateOrderCompletedHandlerTest extends MockeryTestCase
 
     public function test_updates_order_completed_status(): void
     {
-
         $order = new Order(
             id: 1,
             portfolio: 1,
@@ -73,7 +72,7 @@ final class UpdateOrderCompletedHandlerTest extends MockeryTestCase
             status: "completed"
         );
  
-        $this->repository->shouldReceive('searchByPortfolioId')
+        $this->repository->shouldReceive('searchById')
             ->with(1)
             ->andReturn($order);
         $this->repository->shouldReceive('save')->once();

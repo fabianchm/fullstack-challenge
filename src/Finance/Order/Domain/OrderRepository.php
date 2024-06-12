@@ -10,5 +10,5 @@ interface OrderRepository
 {
     public function save(Order $order): void;
 
-    public function searchByPortfolioId(int $id): ?Order;
+    public function searchById(int $id): ?Order;
 }

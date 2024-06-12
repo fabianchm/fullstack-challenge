@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Finizens\Finance\Portfolio\Domain;
 
+use Finizens\Finance\Portfolio\Domain\Event\PortfolioAllocationRemoved;
+use Finizens\Finance\Portfolio\Domain\Event\PortfolioAllocationSharesUpdated;
 use Finizens\Finance\Portfolio\Domain\Event\PortfolioAllocationsAdded;
 use Finizens\Finance\Portfolio\Domain\Event\PortfolioCreated;
 use Finizens\Shared\Domain\Aggregate\DataSourceRoot;
@@ -24,7 +26,7 @@ class Portfolio extends DataSourceRoot
 
         $portfolio->record(new PortfolioCreated($id));
 
-        $portfolio->addAllocations($allocations);
+        $portfolio->addAllocations($allocations, true);
 
         return $portfolio;
     }
@@ -39,7 +41,7 @@ class Portfolio extends DataSourceRoot
         return $this->allocations->getArray();
     }
 
-    public function addAllocations(array $allocations): void
+    public function addAllocations(array $allocations, bool $avoidDispatchEvent = false): void
     {
         if (count($allocations) <= 0) {
             return;
@@ -49,11 +51,59 @@ class Portfolio extends DataSourceRoot
             $this->allocations->addAllocation($allocation);
         }
 
-        $this->record(new PortfolioAllocationsAdded($this->id, $allocations));
+        if ($avoidDispatchEvent === false) {
+            $this->record(new PortfolioAllocationsAdded($this->id, $allocations));
+        }
     }
 
     public function clearAllocations(): void
     {
         $this->allocations->clear();
+    }
+
+    public function findAllocation(int $id): ?Allocation
+    {
+        return $this->allocations->find($id);
+    }
+
+    public function removeAllocation(int $id): void
+    {
+        $this->allocations->remove($id);
+
+        $this->record(
+            new PortfolioAllocationRemoved(
+                id: $this->id,
+                allocationId: $id 
+            )
+        );
+    }
+
+    public function removeAllocationShares(int $id, int $shares): void
+    {
+        $allocation = $this->findAllocation($id);
+        $oldShares = $allocation->shares();
+        $allocation->removeShares($shares);
+
+        $this->record(new PortfolioAllocationSharesUpdated(
+            id: $this->id,
+            allocationId: $id,
+            oldShares: $oldShares,
+            newShares: $allocation->shares()
+        ));
+    }
+
+    
+    public function addAllocationShares(int $id, int $shares): void
+    {
+        $allocation = $this->findAllocation($id);
+        $oldShares = $allocation->shares();
+        $allocation->addShares($shares);
+
+        $this->record(new PortfolioAllocationSharesUpdated(
+            id: $this->id,
+            allocationId: $id,
+            oldShares: $oldShares,
+            newShares: $allocation->shares()
+        ));
     }
 }

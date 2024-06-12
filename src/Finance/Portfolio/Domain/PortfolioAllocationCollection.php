@@ -34,4 +34,14 @@ class PortfolioAllocationCollection implements Entity
     {
         $this->allocations->clear();
     }
+
+    public function find(int $id): ?Allocation
+    {
+        return $this->allocations->get($id); 
+    }
+
+    public function remove(int $id): void
+    {
+        $this->allocations->remove($id);
+    } 
 }

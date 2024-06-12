@@ -24,4 +24,14 @@ class Allocation implements Entity
     {
         return $this->shares;
     }
+
+    public function addShares(int $shares): void
+    {
+        $this->shares += $shares;
+    }
+
+    public function removeShares(int $shares): void
+    {
+        $this->shares -= $shares;
+    }
 }

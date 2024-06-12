@@ -60,7 +60,13 @@ class Order extends DataSourceRoot
         $this->completed = true;
 
         $this->record(
-            new OrderCompleted($this->id)
+            new OrderCompleted(
+                id: $this->id,
+                portfolio: $this->portfolio,
+                allocation: $this->allocation,
+                orderType: $this->type,
+                shares: $this->shares 
+            )
         );
     }   
 }

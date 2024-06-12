@@ -18,7 +18,7 @@ class UpdateOrderCompletedHandler implements CommandHandler
 
     public function __invoke(UpdateOrderCompleted $command): void
     {
-        $order = $this->repository->searchByPortfolioId($command->id);
+        $order = $this->repository->searchById($command->id);
 
         if ($command->status !== "completed") {
             # Throw 400 exception

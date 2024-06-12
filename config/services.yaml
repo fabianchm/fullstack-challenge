@@ -37,3 +37,7 @@ services:
         Finizens\Shared\Application\MessageHandler\QueryHandler:
             tags:
                 - { name: messenger.message_handler, bus: query.bus }
+
+        Finizens\Shared\Application\MessageHandler\DomainEventListener:
+            tags:
+                - { name: messenger.message_handler, bus: event.bus }
