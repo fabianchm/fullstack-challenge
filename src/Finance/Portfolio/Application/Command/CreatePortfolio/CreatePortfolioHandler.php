@@ -22,15 +22,17 @@ class CreatePortfolioHandler implements CommandHandler
         $portfolio = $this->repository->searchById($command->id);
 
         if ($portfolio !== null) {
-            $portfolio->clearAllocations();
-            $portfolio->addAllocations($command->allocations);
-            # call a service to remove related orders
+            $portfolio->reset($command->allocations);
         } else {
             $portfolio = Portfolio::create($command->id, $command->allocations);
         }
 
         $this->repository->save($portfolio);
  
-        $this->eventBus->dispatch(...$portfolio->pullDomainEvents());
+        # It would be better to create a custom event bus and implement this "bulk" dispatch instead of doing
+        # this foreach in the command handler
+        foreach($portfolio->pullDomainEvents() as $event) {
+            $this->eventBus->dispatch($event);
+        }
     }
 }

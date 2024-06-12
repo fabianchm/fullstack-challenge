@@ -24,4 +24,14 @@ final class OrderDoctrineRepository extends DoctrineRepository implements OrderR
     {
         return $this->repository()->findOneBy(['id' => $id]);
     }
+
+    public function remove(Order $order): void
+    {
+        $this->removeAggregateRoot($order);
+    }
+
+    public function searchAllByPortfolioId(int $porfolioId): array
+    {
+        return $this->repository()->findBy(['portfolio' => $porfolioId]);
+    }
 }

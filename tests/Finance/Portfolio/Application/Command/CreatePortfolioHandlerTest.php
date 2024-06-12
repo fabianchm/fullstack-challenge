@@ -11,6 +11,7 @@ use Finizens\Finance\Portfolio\Domain\Event\PortfolioCreated;
 use Finizens\Finance\Portfolio\Domain\Portfolio;
 use Finizens\Finance\Portfolio\Domain\PortfolioAllocationCollection;
 use Finizens\Finance\Portfolio\Domain\PortfolioRepository;
+use Finizens\Finance\Shared\Domain\PortfolioReset;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
@@ -65,6 +66,12 @@ final class CreatePortfolioHandlerTest extends MockeryTestCase
             ->shouldReceive('dispatch')
             ->withArgs(function($arg) {
                 return $arg instanceof PortfolioAllocationsAdded;
+            })
+            ->once();
+        $this->bus
+            ->shouldReceive('dispatch')
+            ->withArgs(function($arg) {
+                return $arg instanceof PortfolioReset;
             })
             ->once();
 

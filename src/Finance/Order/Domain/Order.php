@@ -6,6 +6,7 @@ namespace Finizens\Finance\Order\Domain;
 
 use Finizens\Finance\Order\Domain\Event\OrderCompleted;
 use Finizens\Finance\Order\Domain\Event\OrderCreated;
+use Finizens\Finance\Order\Domain\Event\OrderRemoved;
 use Finizens\Shared\Domain\Aggregate\DataSourceRoot;
 
 class Order extends DataSourceRoot
@@ -49,6 +50,11 @@ class Order extends DataSourceRoot
 
         return $order;
     }
+    
+    public function id(): int
+    {
+        return $this->id;
+    }
 
     public function completed(): bool
     {
@@ -68,5 +74,12 @@ class Order extends DataSourceRoot
                 shares: $this->shares 
             )
         );
-    }   
+    } 
+
+    public function remove(): void
+    {
+        $this->record(
+            new OrderRemoved($this->id)
+        );
+    }
 }

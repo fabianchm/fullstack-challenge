@@ -8,6 +8,7 @@ use Finizens\Finance\Portfolio\Domain\Event\PortfolioAllocationRemoved;
 use Finizens\Finance\Portfolio\Domain\Event\PortfolioAllocationSharesUpdated;
 use Finizens\Finance\Portfolio\Domain\Event\PortfolioAllocationsAdded;
 use Finizens\Finance\Portfolio\Domain\Event\PortfolioCreated;
+use Finizens\Finance\Shared\Domain\PortfolioReset;
 use Finizens\Shared\Domain\Aggregate\DataSourceRoot;
 
 class Portfolio extends DataSourceRoot
@@ -105,5 +106,14 @@ class Portfolio extends DataSourceRoot
             oldShares: $oldShares,
             newShares: $allocation->shares()
         ));
+    }
+
+    public function reset(array $allocations): void
+    {
+        $this->clearAllocations();
+        $this->addAllocations($allocations);
+        $this->record(
+            new PortfolioReset($this->id)
+        );
     }
 }
