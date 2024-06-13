@@ -12,6 +12,7 @@ use Finizens\Finance\Order\Application\Query\View\OrderView;
 use Finizens\Finance\Order\Application\Query\View\OrderViewAssembler;
 use Finizens\Finance\Order\Domain\Order;
 use Finizens\Finance\Order\Domain\OrderRepository;
+use Finizens\Finance\Shared\Domain\OrderTypeEnum;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
@@ -38,13 +39,13 @@ final class SearchUncompletedOrderFromPortfolioHandlerTest extends MockeryTestCa
 
     public function test_resturns_view(): void
     {
-        $view = new OrderView(1, 1, 1, 1, "sell", false);
+        $view = new OrderView(1, 1, 1, 1, OrderTypeEnum::SELL, false);
         $viewList = new OrderListView([$view]);
 
         $query = new SearchUncompletedOrderFromPortfolio($view->id); 
     
         $this->repository->shouldReceive('searchUncompletedByPortfolioId')->andReturns(
-            [Order::create($view->id, 1, 1, 1, "sell", false)]
+            [Order::create($view->id, 1, 1, 1, OrderTypeEnum::SELL, false)]
         );
 
         $response = call_user_func($this->handler, $query);

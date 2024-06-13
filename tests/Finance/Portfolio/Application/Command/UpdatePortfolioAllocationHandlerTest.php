@@ -9,6 +9,7 @@ use Finizens\Finance\Portfolio\Domain\Event\PortfolioAllocationRemoved;
 use Finizens\Finance\Portfolio\Domain\Event\PortfolioAllocationSharesUpdated;
 use Finizens\Finance\Portfolio\Domain\Event\PortfolioAllocationsAdded;
 use Finizens\Finance\Portfolio\Domain\PortfolioRepository;
+use Finizens\Finance\Shared\Domain\OrderTypeEnum;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
@@ -49,7 +50,7 @@ final class UpdatePortfolioAllocationHandlerTest extends MockeryTestCase
         );
 
 
-        $command = new UpdatePortfolioAllocation(1, 1, 3, "sell");
+        $command = new UpdatePortfolioAllocation(1, 1, 3, OrderTypeEnum::SELL);
  
         $this->repository->shouldReceive('searchById')->andReturns($portfolio);
         $this->repository->shouldReceive('save')->once();
@@ -79,7 +80,7 @@ final class UpdatePortfolioAllocationHandlerTest extends MockeryTestCase
             )
         );
 
-        $command = new UpdatePortfolioAllocation(1, 1, 2, "sell");
+        $command = new UpdatePortfolioAllocation(1, 1, 2, OrderTypeEnum::SELL);
  
         $this->repository->shouldReceive('searchById')->andReturns($portfolio);
         $this->repository->shouldReceive('save')->once();
@@ -111,7 +112,7 @@ final class UpdatePortfolioAllocationHandlerTest extends MockeryTestCase
             )
         );
 
-        $command = new UpdatePortfolioAllocation(1, 1, 2, "buy");
+        $command = new UpdatePortfolioAllocation(1, 1, 2, OrderTypeEnum::BUY);
  
         $this->repository->shouldReceive('searchById')->andReturns($portfolio);
         $this->repository->shouldReceive('save')->once();
@@ -138,7 +139,7 @@ final class UpdatePortfolioAllocationHandlerTest extends MockeryTestCase
             )
         );
 
-        $command = new UpdatePortfolioAllocation(1, 1, 2, "buy");
+        $command = new UpdatePortfolioAllocation(1, 1, 2, OrderTypeEnum::BUY);
  
         $this->repository->shouldReceive('searchById')->andReturns($portfolio);
         $this->repository->shouldReceive('save')->once();

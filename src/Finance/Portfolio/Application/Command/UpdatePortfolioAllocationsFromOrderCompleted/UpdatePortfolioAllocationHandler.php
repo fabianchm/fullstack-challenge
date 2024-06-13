@@ -5,6 +5,7 @@ namespace Finizens\Finance\Portfolio\Application\Command\UpdatePortfolioAllocati
 use Finizens\Finance\Portfolio\Domain\Allocation;
 use Finizens\Finance\Portfolio\Domain\Portfolio;
 use Finizens\Finance\Portfolio\Domain\PortfolioRepository;
+use Finizens\Finance\Shared\Domain\OrderTypeEnum;
 use Finizens\Shared\Application\MessageHandler\CommandHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -25,13 +26,13 @@ final class UpdatePortfolioAllocationHandler implements CommandHandler
 
         $allocation = $portfolio->findAllocation($command->allocationId);
 
-        if ($allocation === null && $command->orderType === "sell") {
+        if ($allocation === null && $command->orderType === OrderTypeEnum::SELL) {
             return;
         }
 
         match ($command->orderType) {
-            "sell" => $this->sellShares($portfolio, $allocation, $command->shares),
-            "buy" => $this->buyShares($portfolio, $allocation, $command->allocationId,  $command->shares),
+            OrderTypeEnum::SELL => $this->sellShares($portfolio, $allocation, $command->shares),
+            OrderTypeEnum::BUY => $this->buyShares($portfolio, $allocation, $command->allocationId,  $command->shares),
         };
         
         $this->repository->save($portfolio); 

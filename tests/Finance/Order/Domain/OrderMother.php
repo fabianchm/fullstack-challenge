@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Finance\Order\Domain;
 
 use Finizens\Finance\Order\Domain\Order;
+use Finizens\Finance\Shared\Domain\OrderTypeEnum;
 use Tests\Shared\Domain\ObjectMother;
 
 final class OrderMother extends ObjectMother
@@ -29,10 +30,6 @@ final class OrderMother extends ObjectMother
 
     public static function generateType(): string
     {
-        if (self::generator()->boolean() === true) {
-            return "buy";
-        }
-
-        return "sell";
+        return self::generator()->boolean() === true ? OrderTypeEnum::BUY : OrderTypeEnum::SELL;
     }
 }

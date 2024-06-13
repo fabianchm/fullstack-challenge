@@ -8,6 +8,7 @@ use Finizens\Finance\Order\Application\Command\CreateOrder\CreateOrder;
 use Finizens\Finance\Order\Application\Command\CreateOrder\CreateOrderHandler;
 use Finizens\Finance\Order\Domain\Event\OrderCreated;
 use Finizens\Finance\Order\Domain\OrderRepository;
+use Finizens\Finance\Shared\Domain\OrderTypeEnum;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
@@ -37,7 +38,7 @@ final class CreateOrderHandlerTest extends MockeryTestCase
             portfolio: 1,
             allocation: 1,
             shares: 5,
-            type: "buy"
+            type: OrderTypeEnum::BUY
         );
  
         $this->repository->shouldReceive('save')->once();
