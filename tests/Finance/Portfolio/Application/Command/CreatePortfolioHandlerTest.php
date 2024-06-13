@@ -8,8 +8,6 @@ use Finizens\Finance\Portfolio\Application\Command\CreatePortfolio\CreatePortfol
 use Finizens\Finance\Portfolio\Application\Command\CreatePortfolio\CreatePortfolioHandler;
 use Finizens\Finance\Portfolio\Domain\Event\PortfolioAllocationsAdded;
 use Finizens\Finance\Portfolio\Domain\Event\PortfolioCreated;
-use Finizens\Finance\Portfolio\Domain\Portfolio;
-use Finizens\Finance\Portfolio\Domain\PortfolioAllocationCollection;
 use Finizens\Finance\Portfolio\Domain\PortfolioRepository;
 use Finizens\Finance\Shared\Domain\PortfolioReset;
 use Mockery;
@@ -17,6 +15,8 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use DG\BypassFinals;
+use Tests\Finance\Portfolio\Domain\PortfolioAllocationCollectionMother;
+use Tests\Finance\Portfolio\Domain\PortfolioMother;
 
 final class CreatePortfolioHandlerTest extends MockeryTestCase
 {
@@ -53,11 +53,12 @@ final class CreatePortfolioHandlerTest extends MockeryTestCase
     public function test_add_allocations_if_portfolio_already_exists(): void
     {
         $command = new CreatePortfolio(1, [['id' => 1, 'shares' => 8]]);
-        $portfolio = new Portfolio(
-            1, 
-            new PortfolioAllocationCollection(1, [
-                ['id' => 1, 'shares' => 7]                
-            ])
+        $portfolio = PortfolioMother::create(
+            id: 1, 
+            allocations: PortfolioAllocationCollectionMother::create(
+                id: 1,
+                allocations: [] 
+            )
         );
  
         $this->repository->shouldReceive('searchById')->andReturns($portfolio);

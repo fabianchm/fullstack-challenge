@@ -1,18 +1,21 @@
 <?php
 
-namespace Finizens\Finance\Portfolio\Application\Command\UpdatePortfolioAllocationsFromOrderCompleted;
+namespace Tests\Finance\Portfolio\Application\Command;
 
 use DG\BypassFinals;
+use Finizens\Finance\Portfolio\Application\Command\UpdatePortfolioAllocationsFromOrderCompleted\UpdatePortfolioAllocation;
+use Finizens\Finance\Portfolio\Application\Command\UpdatePortfolioAllocationsFromOrderCompleted\UpdatePortfolioAllocationHandler;
 use Finizens\Finance\Portfolio\Domain\Event\PortfolioAllocationRemoved;
 use Finizens\Finance\Portfolio\Domain\Event\PortfolioAllocationSharesUpdated;
 use Finizens\Finance\Portfolio\Domain\Event\PortfolioAllocationsAdded;
-use Finizens\Finance\Portfolio\Domain\Portfolio;
-use Finizens\Finance\Portfolio\Domain\PortfolioAllocationCollection;
 use Finizens\Finance\Portfolio\Domain\PortfolioRepository;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Tests\Finance\Portfolio\Domain\AllocationMother;
+use Tests\Finance\Portfolio\Domain\PortfolioAllocationCollectionMother;
+use Tests\Finance\Portfolio\Domain\PortfolioMother;
 
 final class UpdatePortfolioAllocationHandlerTest extends MockeryTestCase 
 {
@@ -32,12 +35,19 @@ final class UpdatePortfolioAllocationHandlerTest extends MockeryTestCase
 
     public function test_remove_allocation_if_sell_all_shares(): void
     {
-        $portfolio = new Portfolio(1, new PortfolioAllocationCollection(1, [
-            [
-                'id' => 1,
-                'shares' => 3,
-            ]
-        ]));
+        $portfolio = PortfolioMother::create(
+            id: 1,
+            allocations: PortfolioAllocationCollectionMother::create(
+                id: 1,
+                allocations: [
+                    AllocationMother::create(
+                        id: 1,
+                        shares: 3
+                    )->serialize()
+                ]
+            )
+        );
+
 
         $command = new UpdatePortfolioAllocation(1, 1, 3, "sell");
  
@@ -56,12 +66,18 @@ final class UpdatePortfolioAllocationHandlerTest extends MockeryTestCase
 
     public function test_remove_shares_when_sell_order_is_completed(): void
     {
-        $portfolio = new Portfolio(1, new PortfolioAllocationCollection(1, [
-            [
-                'id' => 1,
-                'shares' => 3,
-            ]
-        ]));
+        $portfolio = PortfolioMother::create(
+            id: 1,
+            allocations: PortfolioAllocationCollectionMother::create(
+                id: 1,
+                allocations: [
+                    AllocationMother::create(
+                        id: 1,
+                        shares: 3
+                    )->serialize()
+                ]
+            )
+        );
 
         $command = new UpdatePortfolioAllocation(1, 1, 2, "sell");
  
@@ -82,12 +98,18 @@ final class UpdatePortfolioAllocationHandlerTest extends MockeryTestCase
     
     public function test_add_shares_when_buy_order_is_completed(): void
     {
-        $portfolio = new Portfolio(1, new PortfolioAllocationCollection(1, [
-            [
-                'id' => 1,
-                'shares' => 3,
-            ]
-        ]));
+        $portfolio = PortfolioMother::create(
+            id: 1,
+            allocations: PortfolioAllocationCollectionMother::create(
+                id: 1,
+                allocations: [
+                    AllocationMother::create(
+                        id: 1,
+                        shares: 3
+                    )->serialize()
+                ]
+            )
+        );
 
         $command = new UpdatePortfolioAllocation(1, 1, 2, "buy");
  
@@ -108,7 +130,13 @@ final class UpdatePortfolioAllocationHandlerTest extends MockeryTestCase
 
     public function test_creates_allocation_if_not_exists_when_buy_order_is_completed(): void
     {
-        $portfolio = new Portfolio(1, new PortfolioAllocationCollection(1, []));
+        $portfolio = PortfolioMother::create(
+            id: 1,
+            allocations: PortfolioAllocationCollectionMother::create(
+                id: 1,
+                allocations: []
+            )
+        );
 
         $command = new UpdatePortfolioAllocation(1, 1, 2, "buy");
  

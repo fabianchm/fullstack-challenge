@@ -34,4 +34,12 @@ class Allocation implements Entity
     {
         $this->shares -= $shares;
     }
+
+    public function serialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'shares' => $this->shares
+        ];
+    }
 }
