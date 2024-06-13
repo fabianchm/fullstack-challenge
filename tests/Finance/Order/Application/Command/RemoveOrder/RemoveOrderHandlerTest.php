@@ -7,13 +7,13 @@ namespace Tests\Finance\Order\Application\Command\RemoveOrder;
 use Finizens\Finance\Order\Application\Command\RemoveOrder\RemoveOrder;
 use Finizens\Finance\Order\Application\Command\RemoveOrder\RemoveOrderHandler;
 use Finizens\Finance\Order\Domain\Event\OrderRemoved;
-use Finizens\Finance\Order\Domain\Order;
 use Finizens\Finance\Order\Domain\OrderRepository;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use DG\BypassFinals;
+use Tests\Finance\Order\Domain\OrderMother;
 
 final class RemoveOrderHandlerTest extends MockeryTestCase
 {
@@ -33,18 +33,11 @@ final class RemoveOrderHandlerTest extends MockeryTestCase
 
     public function test_removes_order(): void
     {
-        $order = new Order(
-            id: 1,
-            portfolio: 1,
-            allocation: 1,
-            shares: 5,
-            type: "buy",
-            completed: true
-        );
+        $order = OrderMother::create();
 
-        $command = new RemoveOrder(1);
+        $command = new RemoveOrder($order->id());
 
-        $this->repository->shouldReceive('searchById')->with(1)->andReturn($order);
+        $this->repository->shouldReceive('searchById')->with($order->id())->andReturn($order);
         $this->repository->shouldReceive('remove')->once();
         $this->bus
             ->shouldReceive('dispatch')

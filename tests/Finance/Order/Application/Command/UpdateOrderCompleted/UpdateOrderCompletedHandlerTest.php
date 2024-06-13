@@ -7,13 +7,13 @@ namespace Tests\Finance\Order\Application\Command\UpdateOrderCompleted;
 use Finizens\Finance\Order\Application\Command\UpdateOrderCompleted\UpdateOrderCompleted;
 use Finizens\Finance\Order\Application\Command\UpdateOrderCompleted\UpdateOrderCompletedHandler;
 use Finizens\Finance\Order\Domain\Event\OrderCompleted;
-use Finizens\Finance\Order\Domain\Order;
 use Finizens\Finance\Order\Domain\OrderRepository;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use DG\BypassFinals;
+use Tests\Finance\Order\Domain\OrderMother;
 
 final class UpdateOrderCompletedHandlerTest extends MockeryTestCase
 {
@@ -33,22 +33,17 @@ final class UpdateOrderCompletedHandlerTest extends MockeryTestCase
 
     public function test_do_nothing_if_order_is_already_completed(): void
     {
-        $order = new Order(
-            id: 1,
-            portfolio: 1,
-            allocation: 1,
-            shares: 5,
-            type: "buy",
+        $order = OrderMother::create(
             completed: true
         );
 
         $command = new UpdateOrderCompleted(
-            id: 1,
+            id: $order->id(),
             status: "completed"
         );
  
         $this->repository->shouldReceive('searchById')
-            ->with(1)
+            ->with($order->id())
             ->andReturn($order);
         $this->repository->shouldNotReceive('save');
         $this->bus->shouldNotReceive('dispatch');
@@ -58,22 +53,15 @@ final class UpdateOrderCompletedHandlerTest extends MockeryTestCase
 
     public function test_updates_order_completed_status(): void
     {
-        $order = new Order(
-            id: 1,
-            portfolio: 1,
-            allocation: 1,
-            shares: 5,
-            type: "buy",
-            completed: false
-        );
+        $order = OrderMother::create(completed: false);
 
         $command = new UpdateOrderCompleted(
-            id: 1,
+            id: $order->id(),
             status: "completed"
         );
  
         $this->repository->shouldReceive('searchById')
-            ->with(1)
+            ->with($order->id())
             ->andReturn($order);
         $this->repository->shouldReceive('save')->once();
         $this->bus
