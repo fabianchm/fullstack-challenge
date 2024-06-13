@@ -34,4 +34,9 @@ final class OrderDoctrineRepository extends DoctrineRepository implements OrderR
     {
         return $this->repository()->findBy(['portfolio' => $porfolioId]);
     }
+    
+    public function searchUncompletedByPortfolioId(int $portfolioId): array
+    {
+        return $this->repository()->findBy(['portfolio' => $portfolioId, 'completed' => false]);
+    }
 }

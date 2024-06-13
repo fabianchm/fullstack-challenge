@@ -56,6 +56,26 @@ class Order extends DataSourceRoot
         return $this->id;
     }
 
+    public function portfolio(): int
+    {
+        return $this->portfolio;
+    }
+
+    public function allocation(): int
+    {
+        return $this->allocation;
+    }
+
+    public function shares(): int
+    {
+        return $this->shares;   
+    }
+
+    public function type(): string
+    {
+        return $this->type;   
+    }
+
     public function completed(): bool
     {
         return $this->completed;

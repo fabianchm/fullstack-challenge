@@ -15,4 +15,6 @@ interface OrderRepository
     public function remove(Order $order): void;
 
     public function searchAllByPortfolioId(int $portfolioId): array;
+
+    public function searchUncompletedByPortfolioId(int $portfolioId): array;
 }
