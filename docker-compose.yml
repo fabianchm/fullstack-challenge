@@ -6,6 +6,7 @@ services:
         build: ./docker/php
         volumes:
             - ./:/var/www/symfony
+            - /var/www/symfony/front
         networks:
             - symfony
 
@@ -30,6 +31,19 @@ services:
             MYSQL_PASSWORD: secret
         ports: 
             - 3306:3306
+        networks:
+            - symfony
+
+    front:
+        container_name: front
+        build:
+            context: ./front
+            dockerfile: Dockerfile
+        volumes:
+            - ./front:/app
+            - /app/node_modules
+        ports: 
+            - 5173:5173
         networks:
             - symfony
 

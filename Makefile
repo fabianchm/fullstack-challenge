@@ -5,7 +5,8 @@ build:
 	docker compose build
 	docker compose up -d
 	$(PHP_EXEC) composer install
-	$(PHP_EXEC) php bin/console doctrine:database:create
+
+migrate:
 	$(PHP_EXEC) php bin/console doctrine:migrations:migrate
 
 start:
