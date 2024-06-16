@@ -24,7 +24,7 @@ final class CreateOrderController
     public function __invoke(Request $request): JsonResponse 
     {
         $payload = $request->getPayload();
-    
+
         $this->bus->dispatch(
             new CreateOrder(
                 $payload->get('id'),

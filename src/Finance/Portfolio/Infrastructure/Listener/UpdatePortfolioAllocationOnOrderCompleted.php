@@ -3,7 +3,7 @@
 namespace Finizens\Finance\Portfolio\Infrastructure\Listener;
 
 use Finizens\Finance\Order\Domain\Event\OrderCompleted;
-use Finizens\Finance\Portfolio\Application\Command\UpdatePortfolioAllocationsFromOrderCompleted\PortfolioAllocationUpdate; 
+use Finizens\Finance\Portfolio\Application\Command\UpdatePortfolioAllocationsFromOrderCompleted\UpdatePortfolioAllocation;
 use Finizens\Shared\Application\MessageHandler\DomainEventListener;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -16,7 +16,7 @@ final class UpdatePortfolioAllocationOnOrderCompleted implements DomainEventList
     public function __invoke(OrderCompleted $event): void
     {
         $this->bus->dispatch(
-            new PortfolioAllocationUpdate(
+            new UpdatePortfolioAllocation(
                 portfolioId: $event->portfolio,
                 allocationId: $event->allocation,
                 orderType: $event->orderType,

@@ -7,6 +7,7 @@ import OrderList from '@/framework/components/order/OrderList.vue'
 
 let data = ref(null)
 let isLoaded = ref(false)
+
 const orderListRef = ref()
 const params = new URLSearchParams(window.location.search);
 const portfolio = params.get('portfolio')
@@ -19,7 +20,10 @@ async function fetchData() {
     isLoaded.value = false
     data.value = await FindPortfolioById(PortfolioApiRepository(), portfolio)
     isLoaded.value = true
-    fetchOrdersData()
+    if (data.value !== null) {
+        fetchOrdersData()
+        return
+    }
 }
 
 function fetchOrdersData() {
@@ -27,15 +31,20 @@ function fetchOrdersData() {
         orderListRef.value.fetch()
     }, 1)
 }
+
+function reload() {
+    fetchData()
+}
 </script>
 
 <template>
-    <div v-if="isLoaded === true" class="my-4 text-center">
+    <div v-if="isLoaded === true && data !== null" class="my-4 text-center">
         <h2>PORTFOLIO ID: {{data.Id}}</h2>
         <div class="flex md:flex-nowrap flex-wrap place-content-around mt-4">
             <AllocationList v-bind:allocations="data.allocations" />
-            <OrderList ref="orderListRef" :portfolio="portfolio"/>
+            <OrderList ref="orderListRef" @updatePortfolio="reload" :portfolio="portfolio"/>
         </div>
     </div>
-    <div class="my-4 h-5/6 w-auto flex justify-center items-center" v-else> Loading... </div>
+    <div class="my-4 h-5/6 w-auto flex justify-center items-center" v-else-if="isLoaded === false"> Loading... </div>
+    <div v-else class="my-4 text-center"> There is no portfolio with this id</div>
 </template>

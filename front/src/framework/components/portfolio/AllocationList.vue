@@ -12,7 +12,7 @@
             <thead>
                 <tr><th colspan="2" class="text-center border">ALLOCATIONS</th></tr>
             </thead>
-            <tbody>
+            <tbody v-if="allocations.length > 0" >
                 <tr class="font-bold"> 
                     <td class="border">ID</td>
                     <td class="border">Shares</td>
@@ -23,5 +23,6 @@
                 </tr>
             </tbody>
         </table>
+        <div v-if="allocations.length === 0" class="mb-2"> This portfolio does not have any allocations yet</div>
     </div>
 </template>
