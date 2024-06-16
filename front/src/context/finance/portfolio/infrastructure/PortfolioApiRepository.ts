@@ -10,8 +10,8 @@ export const PortfolioApiRepository = (): PortfolioRepository => {
 }
 
 async function findById(id: number) {
-    const p = import.meta.env.VITE_API_URL
-    return await axios.get(`${p}/portfolios/${id}`)
+    const url = import.meta.env.VITE_API_URL
+    return await axios.get(`${url}/portfolios/${id}`)
         .then((response) => portfolioParser(response.data))
         .catch((error: AxiosError) => {
             throw new Error(error.message)

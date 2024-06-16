@@ -1,11 +1,14 @@
 <script setup>
-import { nextTick, ref, reactive, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { FindPortfolioById } from '@/context/finance/portfolio/application/FindPortfolioById'
 import { PortfolioApiRepository } from '@/context/finance/portfolio/infrastructure/PortfolioApiRepository'
+import AllocationList from './AllocationList.vue'
+import OrderList from '@/framework/components/order/OrderList.vue'
 
 let data = ref(null)
 let isLoaded = ref(false)
-const params = (new URL(document.location)).searchParams;
+const orderListRef = ref()
+const params = new URLSearchParams(window.location.search);
 const portfolio = params.get('portfolio')
 
 onMounted(() => {
@@ -16,27 +19,23 @@ async function fetchData() {
     isLoaded.value = false
     data.value = await FindPortfolioById(PortfolioApiRepository(), portfolio)
     isLoaded.value = true
+    fetchOrdersData()
+}
+
+function fetchOrdersData() {
+    setTimeout(() => {
+        orderListRef.value.fetch()
+    }, 1)
 }
 </script>
 
 <template>
     <div v-if="isLoaded === true" class="my-4 text-center">
-        <h3>Portfolio ID: {{data.Id}}</h3>
-        <table class="border-colapse border mt-4">
-            <thead>
-                <tr><th colspan="2" class="text-center border">ALLOCATIONS</th></tr>
-            </thead>
-            <tbody>
-                <tr class="font-bold"> 
-                    <td class="border">ID</td>
-                    <td class="border">Shares</td>
-                </tr>
-                <tr v-for="allocation in data.allocations">
-                    <td class="border">{{allocation.Id}}</td>
-                    <td class="border">{{allocation.Shares}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <h2>PORTFOLIO ID: {{data.Id}}</h2>
+        <div class="flex md:flex-nowrap flex-wrap place-content-around mt-4">
+            <AllocationList v-bind:allocations="data.allocations" />
+            <OrderList ref="orderListRef" :portfolio="portfolio"/>
+        </div>
     </div>
     <div class="my-4 h-5/6 w-auto flex justify-center items-center" v-else> Loading... </div>
 </template>

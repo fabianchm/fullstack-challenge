@@ -5,7 +5,7 @@
 <template>
   <header>
       <div>
-        <h1 class="text-3xl font-bold text-center"> Finizens - Fullstack challenge </h1>
+        <h1 class="text-3xl font-bold text-center text-primary"> Finizens - Fullstack challenge </h1>
       </div>
   </header>
   <PortfolioView />
