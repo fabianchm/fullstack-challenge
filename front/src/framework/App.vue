@@ -1,18 +1,14 @@
 <script setup lang="ts">
-    import axios from "axios"
-    axios.get('http://localhost:80/api/portfolios/1')
-        .then(function (res) {
-            console.log(JSON.stringify(res.data))
-        })
+    import PortfolioView from "@/framework/components/portfolio/PortfolioView.vue"
 </script>
 
 <template>
   <header>
       <div>
-        <h1 class="text-3xl font-bold text-center"> Finizens - Prueba Técnica </h1>
+        <h1 class="text-3xl font-bold text-center"> Finizens - Fullstack challenge </h1>
       </div>
   </header>
-
+  <PortfolioView />
   <main>
   </main>
 </template>
