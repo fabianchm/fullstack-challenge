@@ -33,7 +33,13 @@
             "branch": "main",
             "version": "2.0",
             "ref": "1e012e04f573524ca83795cd19df9ea690adb604"
-        }
+        },
+        "files": [
+            "behat.yml.dist",
+            "config/services_test.yaml",
+            "features/demo.feature",
+            "tests/Behat/DemoContext.php"
+        ]
     },
     "phpunit/phpunit": {
         "version": "9.6",
