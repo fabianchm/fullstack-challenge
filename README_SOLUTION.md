@@ -57,7 +57,12 @@ this value objects to the database.
 
 More validation and error handling. For example, at this moment, a non valid id error is handled by the database so we 
 should have some domain errors to avoid this kind of errors. Or we can create an order for a non existent portfolio/allocation
-and we should check this in a real environment.
+and we should check this in a real environment. 
+
+Validating portfolio and allocations when creating new order should be made on a service class that contain the required
+queries to check all data is valid instead of having validation methods inside use case class.
 
 At user experience level it would be a good idea to add some notifications for success/error actions in the frontend 
 application.
+
+Behat installation is on work in progress.
